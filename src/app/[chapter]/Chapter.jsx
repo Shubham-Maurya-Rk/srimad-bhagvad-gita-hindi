@@ -9,16 +9,21 @@ import Loading from "@/utils/Loading";
 
 
 const Content = ({ show, chapter, loading, data, fontSize, showImp }) => {
+    const getVerse = (verse) => {
+        if(verse.from === verse.to) return verse.from;
+        return `${verse.from}-${verse.to}`
+    }
+
     if (loading) return <Loading />
     else if (!data.length) return <div className="flex flex-col items-center gap-8 py-10 px-3 text-lg">Shloka will be added soon</div>
     return (<>{
         data.map((d) => {
             if(showImp && !d.isImportant) return <span key={d._id}></span>
             return (
-                <Link href={`/${chapter}/${d.verse}`} key={d._id} className="list-row flex flex-col gap-2">
+                <Link href={`/${chapter}/${getVerse(d.verse)}`} key={d._id} className="list-row flex flex-col gap-2">
                     <div className="flex justify-between">
                         <div style={{ fontSize: fontSize - 4 }}>
-                            <div>{chapter}.{d.verse}</div>
+                            <div>{chapter}.{getVerse(d.verse)}</div>
                             <div className="uppercase font-semibold opacity-60">{show === "translation" ? "भावार्थ" : "श्लोक"}</div>
                         </div>
                         <div className="btn btn-circle btn-ghost">
@@ -158,7 +163,6 @@ export default function Chapter({ chapter }) {
         <div className="carousel carousel-center bg-transparent rounded-box max-w-md space-x-4 p-4">
             {
                 collapseData[chapter - 1].images.map((image) => {
-                    console.log(image)
                     return (
                         <div key={image} className="carousel-item h-60">
                             <img

@@ -31,6 +31,9 @@ const Add = () => {
 
         try {
             setLoading(true);
+            const splitVerse = verse.split('-');
+            const from = parseInt(splitVerse[0]);
+            const to = splitVerse.length > 1 ? parseInt(splitVerse[1]) : from;
             const res = await fetch('/api/add-shloka', {
                 method: 'POST',
                 headers: {
@@ -38,7 +41,10 @@ const Add = () => {
                 },
                 body: JSON.stringify({
                     chapter,
-                    verse,
+                    verse :{
+                        from,
+                        to
+                    },
                     shloka: hindiShloka,
                     devnagri: devanagari,
                     synonyms,

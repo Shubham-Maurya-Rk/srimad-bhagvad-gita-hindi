@@ -2,7 +2,7 @@ import Shloka from "@/msc/models/Shloka";
 import { connectDB } from "@/utils/db";
 import { NextResponse } from "next/server";
 
-export async function GET(req,{ params }) {
+export async function GET(req, { params }) {
   try {
     const { chapter, verse } = await params;
 
@@ -10,7 +10,7 @@ export async function GET(req,{ params }) {
 
     const shloka = await Shloka.findOne({
       chapter: parseInt(chapter),
-      verse,
+      "verse.from": parseInt(verse),
     });
 
     if (!shloka) {
@@ -26,7 +26,7 @@ export async function GET(req,{ params }) {
     });
 
   } catch (err) {
-    console.log("Error: ",err)
+    console.log("Error: ", err)
     console.error('GET /api/[chapter]/[verse] error:', err);
     return new NextResponse(JSON.stringify({ error: 'Internal Server Error' }), {
       status: 500,

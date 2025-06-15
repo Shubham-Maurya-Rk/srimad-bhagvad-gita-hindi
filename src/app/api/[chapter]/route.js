@@ -14,28 +14,12 @@ export async function GET(req, { params }) {
         },
       },
       {
-        $addFields: {
-          verseSortKey: {
-            $toInt: {
-              $arrayElemAt: [
-                { $split: ["$verse", "-"] },
-                0,
-              ],
-            },
-          },
-        },
-      },
-      {
         $sort: {
-          verseSortKey: 1,
-        },
-      },
-      {
-        $project: {
-          verseSortKey: 0, // optional: remove temp field
+          "verse.from": 1,
         },
       },
     ]);
+
 
     return new Response(JSON.stringify(shlokas), {
       status: 200,

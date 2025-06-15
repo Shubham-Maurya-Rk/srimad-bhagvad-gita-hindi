@@ -2,7 +2,10 @@ import mongoose from 'mongoose';
 
 const ShlokaSchema = new mongoose.Schema({
     chapter: { type: Number, required: true },
-    verse: { type: String, required: true },
+    verse: {
+        from: { type: Number, required: true },
+        to: { type: Number, required: true },
+    },
     shloka: { type: String, required: true },
     devnagri: { type: String, required: true },
     synonyms: { type: String, required: true },
